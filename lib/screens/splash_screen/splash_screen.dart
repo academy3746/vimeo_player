@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vimeo_player/common/constants/gaps.dart';
 import 'package:vimeo_player/common/constants/sizes.dart';
-import 'package:vimeo_player/screens/main_screen.dart';
+import 'package:vimeo_player/screens/main_screen/main_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       body: Padding(
         padding: const EdgeInsets.all(
           Sizes.size20,
@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
               const Text(
                 'VIMEO',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.white,
                   fontSize: Sizes.size36,
                   fontWeight: FontWeight.bold,
                 ),

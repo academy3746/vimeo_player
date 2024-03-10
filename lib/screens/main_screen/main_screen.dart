@@ -1,7 +1,9 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:vimeo_player/common/widgets/back_handler_button.dart';
+import 'package:vimeo_player/screens/main_screen/widgets/video.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -15,11 +17,20 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   BackHandlerButton? backHandlerButton;
 
+  XFile? video;
+
+  late VideoClass player;
+
   @override
   void initState() {
     super.initState();
 
     backHandlerButton = BackHandlerButton(context: context);
+
+    player = VideoClass(
+      context: context,
+      file: video,
+    );
   }
 
   @override
@@ -33,7 +44,8 @@ class _MainScreenState extends State<MainScreen> {
         return Future.value(false);
       },
       child: Scaffold(
-        body: Container(),
+        backgroundColor: Colors.black,
+        body: video == null ? player.renderEmpty() : player.renderVideo(),
       ),
     );
   }
