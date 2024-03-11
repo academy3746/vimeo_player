@@ -19,9 +19,9 @@ class VideoClass {
   });
 
   Widget renderEmpty() {
-    Logo logo = Logo(onTap: onNewVideoPressed);
+    var logo = Logo(onTap: onNewVideoPressed);
 
-    AppName appName = const AppName();
+    var appName = const AppName();
 
     return Container(
       width: MediaQuery.of(context).size.width,
