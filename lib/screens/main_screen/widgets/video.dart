@@ -13,8 +13,8 @@ class VideoClass {
 
   VideoClass({
     required this.context,
-    required this.onNewVideoPressed,
     this.file,
+    required this.onNewVideoPressed,
   });
 
   Widget renderEmpty() {
