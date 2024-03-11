@@ -2,7 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
+import 'package:vimeo_player/common/constants/sizes.dart';
 import 'package:vimeo_player/common/widgets/common_icon_button.dart';
+import 'package:vimeo_player/common/widgets/timestamp.dart';
 
 class AppVideoPlayer extends StatefulWidget {
   const AppVideoPlayer({
@@ -102,6 +104,8 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
+    var timeStamp = TimeStamp();
+
     if (videoController == null) {
       return const Center(
         child: CircularProgressIndicator.adaptive(),
@@ -127,15 +131,33 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
                   bottom: 0,
                   right: 0,
                   left: 0,
-                  child: Slider(
-                    value: videoController!.value.position.inSeconds.toDouble(),
-                    min: 0,
-                    max: videoController!.value.duration.inSeconds.toDouble(),
-                    onChanged: (double value) {
-                      videoController!.seekTo(
-                        Duration(seconds: value.toInt()),
-                      );
-                    },
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: Sizes.size8),
+                    child: Row(
+                      children: [
+                        timeStamp.timestampToString(
+                          videoController!.value.position,
+                        ),
+                        Expanded(
+                          child: Slider(
+                            value: videoController!.value.position.inSeconds
+                                .toDouble(),
+                            min: 0,
+                            max: videoController!.value.duration.inSeconds
+                                .toDouble(),
+                            onChanged: (double value) {
+                              videoController!.seekTo(
+                                Duration(seconds: value.toInt()),
+                              );
+                            },
+                          ),
+                        ),
+                        timeStamp.timestampToString(
+                          videoController!.value.duration,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               if (showControl)
