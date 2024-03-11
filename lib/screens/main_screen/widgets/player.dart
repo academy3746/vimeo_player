@@ -16,7 +16,7 @@ class AppVideoPlayer extends StatefulWidget {
 }
 
 class _AppVideoPlayerState extends State<AppVideoPlayer> {
-  VideoPlayerController? videoPlayerController;
+  VideoPlayerController? videoController;
 
   @override
   void initState() {
@@ -33,20 +33,43 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
     await controller.initialize();
 
     setState(() {
-      videoPlayerController = controller;
+      videoController = controller;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (videoPlayerController == null) {
+    final sliderMax = videoController!.value.duration.inSeconds.toDouble();
+
+    final sliderValue = videoController!.value.position.inSeconds.toDouble();
+
+    if (videoController == null) {
       return const Center(
         child: CircularProgressIndicator.adaptive(),
       );
     } else {
       return AspectRatio(
-        aspectRatio: videoPlayerController!.value.aspectRatio,
-        child: VideoPlayer(videoPlayerController!),
+        aspectRatio: videoController!.value.aspectRatio,
+        child: Stack(
+          children: [
+            VideoPlayer(videoController!),
+            Positioned(
+              bottom: 0,
+              right: 0,
+              left: 0,
+              child: Slider(
+                value: sliderValue,
+                min: 0,
+                max: sliderMax,
+                onChanged: (value) {
+                  videoController!.seekTo(
+                    Duration(seconds: value.toInt()),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       );
     }
   }
