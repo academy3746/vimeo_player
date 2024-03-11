@@ -38,10 +38,6 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
     _initializeController();
   }
 
-  void _videoControllerListener() {
-    setState(() {});
-  }
-
   Future<void> _initializeController() async {
     final controller = VideoPlayerController.file(
       File(widget.file.path),
@@ -49,7 +45,7 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
 
     await controller.initialize();
 
-    videoController?.addListener(_videoControllerListener);
+    controller.addListener(_videoControllerListener);
 
     setState(() {
       videoController = controller;
@@ -89,6 +85,10 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
     }
 
     videoController!.seekTo(position);
+  }
+
+  void _videoControllerListener() {
+    setState(() {});
   }
 
   @override
