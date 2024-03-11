@@ -43,11 +43,11 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
       return const Center(
         child: CircularProgressIndicator.adaptive(),
       );
+    } else {
+      return AspectRatio(
+        aspectRatio: videoPlayerController!.value.aspectRatio,
+        child: VideoPlayer(videoPlayerController!),
+      );
     }
-
-    return AspectRatio(
-      aspectRatio: videoPlayerController!.value.aspectRatio,
-      child: VideoPlayer(videoPlayerController!),
-    );
   }
 }
