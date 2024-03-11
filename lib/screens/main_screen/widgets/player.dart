@@ -106,73 +106,73 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
       return const Center(
         child: CircularProgressIndicator.adaptive(),
       );
-    } else {
-      return GestureDetector(
-        onTap: () {
-          setState(() {
-            showControl = !showControl;
-          });
-        },
-        child: AspectRatio(
-          aspectRatio: videoController!.value.aspectRatio,
-          child: Stack(
-            children: [
-              VideoPlayer(videoController!),
-              if (showControl)
-                Container(
-                  color: Colors.black.withOpacity(0.5),
-                ),
-              if (showControl)
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  left: 0,
-                  child: Slider(
-                    value: videoController!.value.position.inSeconds.toDouble(),
-                    min: 0,
-                    max: videoController!.value.duration.inSeconds.toDouble(),
-                    onChanged: (double value) {
-                      videoController!.seekTo(
-                        Duration(seconds: value.toInt()),
-                      );
-                    },
-                  ),
-                ),
-              if (showControl)
-                Align(
-                  alignment: Alignment.topRight,
-                  child: CommonIconButton(
-                    iconData: Icons.photo_camera_back,
-                    onPressed: widget.onNewVideoPressed,
-                  ),
-                ),
-              if (showControl)
-                Align(
-                  alignment: Alignment.center,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      CommonIconButton(
-                        iconData: Icons.rotate_left,
-                        onPressed: _onReversedPressed,
-                      ),
-                      CommonIconButton(
-                        iconData: videoController!.value.isPlaying
-                            ? Icons.pause
-                            : Icons.play_arrow,
-                        onPressed: _onPlayPressed,
-                      ),
-                      CommonIconButton(
-                        iconData: Icons.rotate_right,
-                        onPressed: _onForwardPressed,
-                      ),
-                    ],
-                  ),
-                ),
-            ],
-          ),
-        ),
-      );
     }
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          showControl = !showControl;
+        });
+      },
+      child: AspectRatio(
+        aspectRatio: videoController!.value.aspectRatio,
+        child: Stack(
+          children: [
+            VideoPlayer(videoController!),
+            if (showControl)
+              Container(
+                color: Colors.black.withOpacity(0.5),
+              ),
+            if (showControl)
+              Positioned(
+                bottom: 0,
+                right: 0,
+                left: 0,
+                child: Slider(
+                  value: videoController!.value.position.inSeconds.toDouble(),
+                  min: 0,
+                  max: videoController!.value.duration.inSeconds.toDouble(),
+                  onChanged: (double value) {
+                    videoController!.seekTo(
+                      Duration(seconds: value.toInt()),
+                    );
+                  },
+                ),
+              ),
+            if (showControl)
+              Align(
+                alignment: Alignment.topRight,
+                child: CommonIconButton(
+                  iconData: Icons.photo_camera_back,
+                  onPressed: widget.onNewVideoPressed,
+                ),
+              ),
+            if (showControl)
+              Align(
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    CommonIconButton(
+                      iconData: Icons.rotate_left,
+                      onPressed: _onReversedPressed,
+                    ),
+                    CommonIconButton(
+                      iconData: videoController!.value.isPlaying
+                          ? Icons.pause
+                          : Icons.play_arrow,
+                      onPressed: _onPlayPressed,
+                    ),
+                    CommonIconButton(
+                      iconData: Icons.rotate_right,
+                      onPressed: _onForwardPressed,
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
   }
 }
