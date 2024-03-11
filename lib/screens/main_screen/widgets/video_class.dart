@@ -48,7 +48,10 @@ class VideoClass {
 
   Widget renderVideo() {
     return Center(
-      child: AppVideoPlayer(file: file!),
+      child: AppVideoPlayer(
+        file: file!,
+        onNewVideoPressed: onNewVideoPressed,
+      ),
     );
   }
 }

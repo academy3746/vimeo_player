@@ -8,9 +8,12 @@ class AppVideoPlayer extends StatefulWidget {
   const AppVideoPlayer({
     super.key,
     required this.file,
+    required this.onNewVideoPressed,
   });
 
   final XFile file;
+
+  final GestureTapCallback onNewVideoPressed;
 
   @override
   State<AppVideoPlayer> createState() => _AppVideoPlayerState();
@@ -20,10 +23,23 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
   VideoPlayerController? videoController;
 
   @override
+  void didUpdateWidget(covariant AppVideoPlayer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.file.path != widget.file.path) {
+      _initializeController();
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
 
     _initializeController();
+  }
+
+  void _videoControllerListener() {
+    setState(() {});
   }
 
   Future<void> _initializeController() async {
@@ -33,9 +49,53 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
 
     await controller.initialize();
 
+    videoController?.addListener(_videoControllerListener);
+
     setState(() {
       videoController = controller;
     });
+  }
+
+  void _onReversedPressed() {
+    final currentPosition = videoController!.value.position;
+
+    var position = const Duration();
+
+    if (currentPosition.inSeconds > 3) {
+      position = currentPosition - const Duration(seconds: 3);
+    }
+
+    videoController!.seekTo(position);
+  }
+
+  void _onPlayPressed() {
+    if (videoController!.value.isPlaying) {
+      videoController!.pause();
+    } else {
+      videoController!.play();
+    }
+  }
+
+  void _onForwardPressed() {
+    final maxPosition = videoController!.value.duration;
+
+    final currentPosition = videoController!.value.position;
+
+    var position = maxPosition;
+
+    if ((maxPosition - const Duration(seconds: 3)).inSeconds >
+        currentPosition.inSeconds) {
+      position = currentPosition + const Duration(seconds: 3);
+    }
+
+    videoController!.seekTo(position);
+  }
+
+  @override
+  void dispose() {
+    videoController?.removeListener(_videoControllerListener);
+
+    super.dispose();
   }
 
   @override
@@ -69,7 +129,7 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
               alignment: Alignment.topRight,
               child: CommonIconButton(
                 iconData: Icons.photo_camera_back,
-                onPressed: () {},
+                onPressed: widget.onNewVideoPressed,
               ),
             ),
             Align(
@@ -79,17 +139,17 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
                 children: [
                   CommonIconButton(
                     iconData: Icons.rotate_left,
-                    onPressed: () {},
+                    onPressed: _onReversedPressed,
                   ),
                   CommonIconButton(
                     iconData: videoController!.value.isPlaying
                         ? Icons.pause
                         : Icons.play_arrow,
-                    onPressed: () {},
+                    onPressed: _onPlayPressed,
                   ),
                   CommonIconButton(
                     iconData: Icons.rotate_right,
-                    onPressed: () {},
+                    onPressed: _onForwardPressed,
                   ),
                 ],
               ),
