@@ -26,12 +26,6 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
 
     backHandlerButton = BackHandlerButton(context: context);
-
-    player = VideoClass(
-      context: context,
-      file: video,
-      onNewVideoPressed: _onNewVideoPressed
-    );
   }
 
   Future<void> _onNewVideoPressed() async {
@@ -48,6 +42,12 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    player = VideoClass(
+        context: context,
+        file: video,
+        onNewVideoPressed: _onNewVideoPressed
+    );
+
     return WillPopScope(
       onWillPop: () async {
         if (backHandlerButton != null) {
