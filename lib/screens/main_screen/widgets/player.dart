@@ -122,21 +122,22 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
                 Container(
                   color: Colors.black.withOpacity(0.5),
                 ),
-              Positioned(
-                bottom: 0,
-                right: 0,
-                left: 0,
-                child: Slider(
-                  value: videoController!.value.position.inSeconds.toDouble(),
-                  min: 0,
-                  max: videoController!.value.duration.inSeconds.toDouble(),
-                  onChanged: (double value) {
-                    videoController!.seekTo(
-                      Duration(seconds: value.toInt()),
-                    );
-                  },
+              if (showControl)
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  left: 0,
+                  child: Slider(
+                    value: videoController!.value.position.inSeconds.toDouble(),
+                    min: 0,
+                    max: videoController!.value.duration.inSeconds.toDouble(),
+                    onChanged: (double value) {
+                      videoController!.seekTo(
+                        Duration(seconds: value.toInt()),
+                      );
+                    },
+                  ),
                 ),
-              ),
               if (showControl)
                 Align(
                   alignment: Alignment.topRight,
