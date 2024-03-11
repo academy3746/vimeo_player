@@ -22,6 +22,8 @@ class AppVideoPlayer extends StatefulWidget {
 class _AppVideoPlayerState extends State<AppVideoPlayer> {
   VideoPlayerController? videoController;
 
+  bool showControl = false;
+
   @override
   void didUpdateWidget(covariant AppVideoPlayer oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -105,56 +107,69 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
         child: CircularProgressIndicator.adaptive(),
       );
     } else {
-      return AspectRatio(
-        aspectRatio: videoController!.value.aspectRatio,
-        child: Stack(
-          children: [
-            VideoPlayer(videoController!),
-            Positioned(
-              bottom: 0,
-              right: 0,
-              left: 0,
-              child: Slider(
-                value: videoController!.value.position.inSeconds.toDouble(),
-                min: 0,
-                max: videoController!.value.duration.inSeconds.toDouble(),
-                onChanged: (double value) {
-                  videoController!.seekTo(
-                    Duration(seconds: value.toInt()),
-                  );
-                },
+      return GestureDetector(
+        onTap: () {
+          setState(() {
+            showControl = !showControl;
+          });
+        },
+        child: AspectRatio(
+          aspectRatio: videoController!.value.aspectRatio,
+          child: Stack(
+            children: [
+              VideoPlayer(videoController!),
+              if (showControl)
+                Container(
+                  color: Colors.black.withOpacity(0.5),
+                ),
+              Positioned(
+                bottom: 0,
+                right: 0,
+                left: 0,
+                child: Slider(
+                  value: videoController!.value.position.inSeconds.toDouble(),
+                  min: 0,
+                  max: videoController!.value.duration.inSeconds.toDouble(),
+                  onChanged: (double value) {
+                    videoController!.seekTo(
+                      Duration(seconds: value.toInt()),
+                    );
+                  },
+                ),
               ),
-            ),
-            Align(
-              alignment: Alignment.topRight,
-              child: CommonIconButton(
-                iconData: Icons.photo_camera_back,
-                onPressed: widget.onNewVideoPressed,
-              ),
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  CommonIconButton(
-                    iconData: Icons.rotate_left,
-                    onPressed: _onReversedPressed,
+              if (showControl)
+                Align(
+                  alignment: Alignment.topRight,
+                  child: CommonIconButton(
+                    iconData: Icons.photo_camera_back,
+                    onPressed: widget.onNewVideoPressed,
                   ),
-                  CommonIconButton(
-                    iconData: videoController!.value.isPlaying
-                        ? Icons.pause
-                        : Icons.play_arrow,
-                    onPressed: _onPlayPressed,
+                ),
+              if (showControl)
+                Align(
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CommonIconButton(
+                        iconData: Icons.rotate_left,
+                        onPressed: _onReversedPressed,
+                      ),
+                      CommonIconButton(
+                        iconData: videoController!.value.isPlaying
+                            ? Icons.pause
+                            : Icons.play_arrow,
+                        onPressed: _onPlayPressed,
+                      ),
+                      CommonIconButton(
+                        iconData: Icons.rotate_right,
+                        onPressed: _onForwardPressed,
+                      ),
+                    ],
                   ),
-                  CommonIconButton(
-                    iconData: Icons.rotate_right,
-                    onPressed: _onForwardPressed,
-                  ),
-                ],
-              ),
-            ),
-          ],
+                ),
+            ],
+          ),
         ),
       );
     }
