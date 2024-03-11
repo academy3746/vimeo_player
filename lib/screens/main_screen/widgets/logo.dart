@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vimeo_player/common/constants/sizes.dart';
 
 class Logo extends StatelessWidget {
   const Logo({
@@ -12,7 +13,11 @@ class Logo extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Image.asset('assets/images/splash.png'),
+      child: Image.asset(
+        'assets/images/splash.png',
+        width: Sizes.size150,
+        height: Sizes.size150,
+      ),
     );
   }
 }
