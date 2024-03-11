@@ -132,8 +132,9 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
                   right: 0,
                   left: 0,
                   child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: Sizes.size8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Sizes.size8,
+                    ),
                     child: Row(
                       children: [
                         timeStamp.timestampToString(
