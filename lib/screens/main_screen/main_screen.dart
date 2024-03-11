@@ -19,7 +19,7 @@ class _MainScreenState extends State<MainScreen> {
 
   XFile? video;
 
-  late VideoClass player;
+  late VideoClass vc;
 
   @override
   void initState() {
@@ -42,7 +42,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    player = VideoClass(
+    vc = VideoClass(
         context: context,
         file: video,
         onNewVideoPressed: _onNewVideoPressed
@@ -58,7 +58,7 @@ class _MainScreenState extends State<MainScreen> {
       },
       child: Scaffold(
         backgroundColor: Colors.black,
-        body: video == null ? player.renderEmpty() : player.renderVideo(),
+        body: video == null ? vc.renderEmpty() : vc.renderVideo(),
       ),
     );
   }
