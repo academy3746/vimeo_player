@@ -30,7 +30,20 @@ class _MainScreenState extends State<MainScreen> {
     player = VideoClass(
       context: context,
       file: video,
+      onNewVideoPressed: _onNewVideoPressed
     );
+  }
+
+  Future<void> _onNewVideoPressed() async {
+    final videoFile = await ImagePicker().pickVideo(
+      source: ImageSource.gallery,
+    );
+
+    if (videoFile != null) {
+      setState(() {
+        video = videoFile;
+      });
+    }
   }
 
   @override

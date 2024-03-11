@@ -9,16 +9,19 @@ class VideoClass {
 
   final XFile? file;
 
-  Logo logo = const Logo();
-
-  AppName appName = const AppName();
+  final Function() onNewVideoPressed;
 
   VideoClass({
     required this.context,
+    required this.onNewVideoPressed,
     this.file,
   });
 
   Widget renderEmpty() {
+    Logo logo = Logo(onTap: onNewVideoPressed);
+
+    AppName appName = const AppName();
+
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
