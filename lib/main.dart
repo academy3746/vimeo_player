@@ -20,11 +20,12 @@ class VideoApp extends StatelessWidget {
       title: 'Vimeo Player',
       theme: ThemeData(
         primaryColor: const Color(0xFF2A3A7C),
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0xFF2A3A7C),
-          ),
-          useMaterial3: true,
-          visualDensity: VisualDensity.adaptivePlatformDensity),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF2A3A7C),
+        ),
+        useMaterial3: true,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
       debugShowCheckedModeBanner: false,
       initialRoute: SplashScreen.routeName,
       routes: {
