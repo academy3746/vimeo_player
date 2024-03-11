@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vimeo_player/common/widgets/back_handler_button.dart';
-import 'package:vimeo_player/screens/main_screen/widgets/video.dart';
+import 'package:vimeo_player/screens/main_screen/widgets/video_class.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

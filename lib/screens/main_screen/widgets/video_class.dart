@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:vimeo_player/common/constants/gaps.dart';
 import 'package:vimeo_player/screens/main_screen/widgets/app_name.dart';
 import 'package:vimeo_player/screens/main_screen/widgets/logo.dart';
+import 'package:vimeo_player/screens/main_screen/widgets/player.dart';
 
 class VideoClass {
   final BuildContext context;
@@ -46,6 +47,10 @@ class VideoClass {
   }
 
   Widget renderVideo() {
-    return Container();
+    AppVideoPlayer player = AppVideoPlayer(file: file);
+
+    return Center(
+      child: player,
+    );
   }
 }
